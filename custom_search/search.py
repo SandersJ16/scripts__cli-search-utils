@@ -22,7 +22,7 @@ def parse_arguments():
 
 
 def get_matcher(arguments):
-    return ExactMatcher()
+    return ExactMatcher(case_insensitive=arguments.ignore_case)
 
 
 def highlight(matcher, text, highlight_text):

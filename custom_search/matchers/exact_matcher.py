@@ -1,8 +1,15 @@
 #!/usr/bin/env python
 
 class ExactMatcher():
+    def __init__(self, *, case_insensitive=False):
+        self.case_insensitive = case_insensitive
+
     def matches(self, name, terms):
         matches = True
+        if self.case_insensitive:
+            name = name.lower()
+            terms = [terms.lower() for terms in terms]
+
         for term in terms:
             if term not in name:
                 matches = False
@@ -12,6 +19,9 @@ class ExactMatcher():
 
     def indexesOf(self, name, terms):
         indexes = []
+        if self.case_insensitive:
+            name = name.lower()
+            terms = [terms.lower() for terms in terms]
         for term in terms:
             search_name = name
             offset = 0

@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
             for directory in directories:
                 if matcher.matches(directory, arguments.search_terms):
-                    print(os.path.join(path, highlight(matcher, file, arguments.search_terms)))
+                    print(os.path.join(path, highlight(matcher, directory, arguments.search_terms)))
 
 
     except KeyboardInterrupt:

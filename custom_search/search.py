@@ -6,6 +6,7 @@ import utils
 from argparse import ArgumentParser
 from signal import SIGINT
 from matchers.exact_matcher import ExactMatcher
+from matchers.regex_matcher import RegexMatcher
 
 
 root_dir = "."
@@ -17,12 +18,18 @@ def parse_arguments():
                         help='Terms you are searching for')
     parser.add_argument('--ignore-case', '-i', action="store_true", default=False,
                         help='Ignore case distinctions, so that characters that differ only in case match each other.')
+    parser.add_argument('--regex', '-R' , dest="matcher", action="store_const", const=RegexMatcher, default=RegexMatcher,
+                        help='Regex matching (default)')
+    parser.add_argument('--exact', '-E' , dest="matcher", action="store_const", const=ExactMatcher,
+                        help='Exact matches only (no regex)')
     arguments = parser.parse_args()
+
+
     return arguments
 
 
 def get_matcher(arguments):
-    return ExactMatcher(case_insensitive=arguments.ignore_case)
+    return arguments.matcher(case_insensitive=arguments.ignore_case)
 
 
 def highlight(matcher, text, highlight_text):
